@@ -1,28 +1,12 @@
-import { useState } from "react";
 import Chart from "react-apexcharts";
-import { Button } from "../Button";
 
-export const LineChart = ({}) => {
-  const cdi = {
-    name: "cdi",
-    data: [30, 40, 45, 50, 49, 60, 70, 91, 0].reverse(),
-  };
-  const imoveis = {
-    name: "imoveis",
-    data: [30, 40, 45, 50, 49, 60, 70, 91, 0],
-  };
+export interface LineChartProps {
+  series: { name: string; data: number[] }[];
+  options?: ApexCharts.ApexOptions;
+}
 
-  const axis: {
-    cdi: { name: string; data: number[] };
-    imoveis: { name: string; data: number[] };
-  } = {
-    cdi,
-    imoveis,
-  };
-
-  const [series, setSeries] = useState<{ name: string; data: number[] }[]>([]);
-
-  const options: ApexCharts.ApexOptions = {
+export const LineChart = ({ series, options }: LineChartProps) => {
+  const optionsDefault: ApexCharts.ApexOptions = {
     chart: {
       toolbar: { show: false },
       zoom: {
@@ -38,10 +22,7 @@ export const LineChart = ({}) => {
     markers: {
       size: 0,
     },
-    title: {
-      text: "Stock Price Movement",
-      align: "left",
-    },
+
     fill: {
       type: "gradient",
       gradient: {
@@ -52,38 +33,23 @@ export const LineChart = ({}) => {
         stops: [0, 90, 100],
       },
     },
-    xaxis: {
-      categories: [
-        "2022-12-01",
-        "2022-11-01",
-        "2022-10-01",
-        "2022-09-01",
-        "2022-08-01",
-        "2022-07-01",
-        "2022-06-01",
-        "2022-05-01",
-        "2022-04-01",
-      ],
-      type: "datetime",
+   
+    legend: {
+      position: "top",
+      show: true,
+      showForSingleSeries: true,
+      showForNullSeries: false,
     },
-  };
-
-  const addAxis = (axisName: "cdi" | "imoveis") => {
-    const index = series.findIndex((serie) => serie.name === axisName);
-
-    setSeries((old) => {
-      if (index > -1) {
-        return old.filter((serie) => serie.name !== axisName);
-      }
-      return [...old, axis[axisName]];
-    });
   };
 
   return (
     <>
-      <Button title="cdi" onClick={() => addAxis("cdi")} />
-      <Button title="Imóveis" onClick={() => addAxis("imoveis")} />
-      <Chart type="area" options={options} series={series} width={500} />
+      <Chart
+        type="area"
+        options={{ ...optionsDefault, ...options }}
+        series={series}
+        width={500}
+      />
     </>
   );
 };

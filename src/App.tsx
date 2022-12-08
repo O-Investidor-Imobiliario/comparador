@@ -1,10 +1,8 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { LineChart } from "./components/LineChart";
+import { ComparatorPage } from "./pages/comparator";
 
 function App() {
-  return <LineChart />;
+  return <ComparatorPage />;
 }
 
 export default App;
