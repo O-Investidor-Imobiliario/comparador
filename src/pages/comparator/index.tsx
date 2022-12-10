@@ -1,85 +1,144 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { LineChart } from "../../components/LineChart";
 import { CdiService } from "../../services/cdi-service";
+import { RealStateService } from "../../services/real-state-service";
+
+const calcYields = (list: { value: number }[], investedValue: number) => {
+  return list.reduce((acc: number[], curr, idx) => {
+    if (acc.length > 0) {
+      return [
+        ...acc,
+        parseFloat((curr.value * investedValue + acc[idx - 1]).toFixed(2)),
+      ];
+    } else return [parseFloat(investedValue.toFixed(2))];
+  }, []);
+};
 
 export function ComparatorPage() {
   const cdiService = new CdiService();
+  const realStateService = new RealStateService();
 
-  const cdi = cdiService.getCdi({
-    startDate: "2020-01-01",
-    endDate: "2022-01-01",
-  });
-
-  const dates = cdi.map((el) => el.date);
-  const cdiValues = cdi.map((el) => el.value);
-
-  const cdiLine = {
-    name: "cdi",
-    data: cdiValues,
-  };
-  //    {
-  //     name: "cdi",
-  //     data: [
-  //       30, 40, 45, 50, 49, 60, 70, 91, 10, 30, 40, 45, 50, 49, 60, 70, 91, 10,
-  //     ].reverse(),
-  //   };
-  const imoveis = {
-    name: "imoveis",
-    data: [
-      30, 40, 45, 50, 49, 60, 70, 91, 10, 30, 40, 45, 50, 49, 60, 70, 91, 10,
-    ],
-  };
-
-  const axis: {
-    cdi: { name: string; data: number[] };
-    imoveis: { name: string; data: number[] };
-  } = {
-    cdi: cdiLine,
-    imoveis,
-  };
-
+  const [investedValue, setInvestedValue] = useState("1000000");
   const [series, setSeries] = useState<{ name: string; data: number[] }[]>([]);
-  const addAxis = (axisName: "cdi" | "imoveis") => {
+  const [cdiHistory, setCdiHistory] = useState<
+    { date: string; value: number }[]
+  >([]);
+  const [realStateHistory, setRealStateHistory] = useState<
+    { date: string; value: number }[]
+  >([]);
+  const [realStateData, setRealStateData] = useState<number[]>([]);
+
+  const [cdiData, setCdiData] = useState<number[]>([]);
+  const [dates, setDates] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCdiHistory(
+      cdiService
+        .getCdi({
+          startDate: "2020-01-01",
+          endDate: "2022-01-01",
+        })
+        .reverse()
+    );
+    setRealStateHistory(
+      realStateService.getRealStateAppreciationHistory().reverse()
+    );
+  }, []);
+
+  useEffect(() => {
+    setDates(cdiHistory.map((el) => el.date));
+    calculate();
+  }, [cdiHistory]);
+
+  useEffect(() => {
+    const index = series.findIndex((serie) => serie.name === "cdi");
+
+    setSeries((old) => {
+      if (index > -1) {
+        return [
+          ...old.filter((serie) => serie.name !== "cdi"),
+          { name: "cdi", data: cdiData },
+        ];
+      }
+
+      return old;
+    });
+  }, [cdiData]);
+
+  useEffect(() => {
+    const index = series.findIndex((serie) => serie.name === "realState");
+
+    setSeries((old) => {
+      if (index > -1) {
+        return [
+          ...old.filter((serie) => serie.name !== "realState"),
+          { name: "realState", data: realStateData },
+        ];
+      }
+
+      return old;
+    });
+  }, [realStateData]);
+
+  const calculate = () => {
+    setCdiData(
+      calcYields(
+        cdiHistory.map((num) => ({
+          value: num.value / 100,
+        })),
+        parseFloat(investedValue)
+      )
+    );
+    setRealStateData(
+      // calcYields(realStateHistory, parseFloat(investedValue))
+      realStateHistory.map((el, idx) =>
+        parseFloat(
+          (idx > 0
+            ? el.value * parseFloat(investedValue)
+            : parseFloat(investedValue)
+          ).toFixed(2)
+        )
+      )
+    );
+  };
+
+  const addOrRemoveAxis = (axisName: "cdi" | "realState") => {
+    // | "imoveis") => {
     const index = series.findIndex((serie) => serie.name === axisName);
 
     setSeries((old) => {
       if (index > -1) {
         return old.filter((serie) => serie.name !== axisName);
       }
+
       return [...old, axis[axisName]];
     });
   };
 
+  const axis: {
+    cdi: { name: string; data: number[] };
+    realState: { name: string; data: number[] };
+  } = {
+    cdi: { name: "cdi", data: cdiData },
+    realState: { name: "realState", data: realStateData },
+  };
+
   const xaxis: ApexXAxis = {
     categories: dates,
-    //    [
-    //     "2023-12-01",
-    //     "2023-11-01",
-    //     "2023-10-01",
-    //     "2023-09-01",
-    //     "2023-08-01",
-    //     "2023-07-01",
-    //     "2023-06-01",
-    //     "2023-05-01",
-    //     "2023-04-01",
-    //     "2021-12-01",
-    //     "2021-11-01",
-    //     "2021-10-01",
-    //     "2021-09-01",
-    //     "2021-08-01",
-    //     "2021-07-01",
-    //     "2021-06-01",
-    //     "2021-05-01",
-    //     "2021-04-01",
-    //   ],
     type: "datetime",
   };
 
   return (
     <>
-      <Button title="cdi" onClick={() => addAxis("cdi")} />
-      <Button title="Imóveis" onClick={() => addAxis("imoveis")} />
+      <input
+        onChange={(event) => setInvestedValue(event.target.value)}
+        value={investedValue}
+      />
+      <Button title="Calcular" onClick={calculate} />
+
+      <Button title="cdi" onClick={() => addOrRemoveAxis("cdi")} />
+      <Button title="Imóveis" onClick={() => addOrRemoveAxis("realState")} />
       <LineChart series={series} options={{ xaxis }} />
     </>
   );
