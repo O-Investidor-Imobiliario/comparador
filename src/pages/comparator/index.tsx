@@ -138,7 +138,7 @@ export function ComparatorPage() {
       <Button title="Calcular" onClick={calculate} />
 
       <Button title="cdi" onClick={() => addOrRemoveAxis("cdi")} />
-      <Button title="Imóveis" onClick={() => addOrRemoveAxis("realState")} />
+      {/* <Button title="Imóveis" onClick={() => addOrRemoveAxis("realState")} /> */}
       <LineChart series={series} options={{ xaxis }} />
     </>
   );
