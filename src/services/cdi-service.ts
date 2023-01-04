@@ -1,5 +1,14 @@
 import { AxiosClient } from "../infra/clients/axios";
-import { GetCdiService } from "./ports/get-cdi-service";
+import { CDI } from "./types/cdi";
+
+export namespace CdiService {
+  export interface Input {
+    startDate?: string;
+    endDate?: string;
+  }
+
+  export type Output = CDI[];
+}
 
 export class CdiService extends AxiosClient {
   // implements GetCdiService {
@@ -7,7 +16,7 @@ export class CdiService extends AxiosClient {
     super("https://data.nasdaq.com/api/v3/datasets");
   }
 
-  getCdi({ startDate, endDate }: GetCdiService.Input): GetCdiService.Output {
+  getCdi({ startDate, endDate }: CdiService.Input): CdiService.Output {
     // const url = this.getUrl("BCB/4391/data.json?api_key=R_SkAhh2nyJv-MGdS5XP");
     // const cdi = await this.get<GetCdiService.Output>(url);
     // return cdi;
