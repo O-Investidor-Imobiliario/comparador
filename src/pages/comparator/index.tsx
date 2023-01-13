@@ -153,14 +153,12 @@ const getNumberFromCurrency = (currency: string): number => {
 
 export const ComparatorPage = () => {
   const [initialValue, setInitialValue] = useState("R$ 50.000,00");
-
+  const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
   const [chartData, setChartData] = useState(
     getInitialData(getNumberFromCurrency(initialValue), ["realState", "ipca"])
   );
 
-  const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
-
-  const teste = useCallback(() => {
+  const setDataSets = useCallback(() => {
     if (chartData) {
       const datasets: string[] = chartData.datasets.map((dataset, idx) => {
         if (idx === 0) {
@@ -176,11 +174,12 @@ export const ComparatorPage = () => {
   }, [initialValue]);
 
   useEffect(() => {
-    teste();
-  }, [initialValue, teste]);
+    setDataSets();
+  }, [initialValue, setDataSets]);
 
   const handleInvestmentsChange = (event: any, newInvestments: string[]) => {
     setInvestments(newInvestments);
+
     const newInvestment = event.target.value;
 
     if (
