@@ -9,6 +9,7 @@ import { Colors } from "../../styles/colors";
 export interface ButtonOptions {
   title: string;
   value: string;
+  backgroundColor?: string; //adicionar a cor
 }
 
 export interface ToggleButtonsMultipleProps {
@@ -29,7 +30,7 @@ export default function ToggleButtonsMultiple({
 }: ToggleButtonsMultipleProps) {
   const buttonStyle = {
     borderRadius: 5,
-    backgroundColor: Colors.SUPER_LIGHT_GRAY,
+    backgroundColor: Colors.ICE,
     borderWidth: 0,
     textTransform: "none" as Property.TextTransform,
     padding: "8px 16px",
@@ -39,7 +40,7 @@ export default function ToggleButtonsMultiple({
 
   const buttonSelectedStyle = {
     ...buttonStyle,
-    color: Colors.SUPER_LIGHT_GRAY,
+    color: Colors.ICE,
     backgroundColor: Colors.PRIMARY,
   };
 
@@ -58,13 +59,17 @@ export default function ToggleButtonsMultiple({
           height: 48,
         }}
       >
-        {buttonsOptions.map(({ value, title }, index) => {
+        {buttonsOptions.map(({ value, title, backgroundColor }, index) => {
           return (
             <ToggleButton
               key={`toggle-button-${index}`}
               value={value}
               aria-label={value}
-              style={values.includes(value) ? buttonSelectedStyle : buttonStyle}
+              style={
+                values.includes(value)
+                  ? { ...buttonSelectedStyle, backgroundColor }
+                  : buttonStyle
+              }
             >
               {title}
             </ToggleButton>

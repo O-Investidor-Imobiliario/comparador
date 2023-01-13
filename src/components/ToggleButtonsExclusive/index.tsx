@@ -29,7 +29,7 @@ export default function ToggleButtonsExclusive({
 
   const buttonStyle = {
     borderRadius: 5,
-    backgroundColor: Colors.SUPER_LIGHT_GRAY,
+    backgroundColor: Colors.ICE,
     borderWidth: 0,
     textTransform: "none" as Property.TextTransform,
     padding: "8px 16px",
@@ -42,7 +42,7 @@ export default function ToggleButtonsExclusive({
 
   const buttonSelectedStyle = {
     ...buttonStyle,
-    color: Colors.SUPER_LIGHT_GRAY,
+    color: Colors.ICE,
     backgroundColor: Colors.PRIMARY,
   };
 
@@ -56,7 +56,7 @@ export default function ToggleButtonsExclusive({
       style={{
         display: "flex",
         justifyContent: "space-between",
-        backgroundColor: Colors.SUPER_LIGHT_GRAY,
+        backgroundColor: Colors.ICE,
         padding: "4px 8px",
         gap: 8,
         alignItems: "center",

@@ -6,75 +6,178 @@ import ToggleButtonsMultiple, {
 } from "../../components/ToggleButtonsMultiple";
 import { Colors } from "../../styles/colors";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Results } from "./components/results";
 
 import { CdiService } from "../../services/cdi-service";
+import { RealStateService } from "../../services/real-state-service";
+import { SavingsAccountService } from "../../services/savings-account-service";
+import { IbovespaService } from "../../services/ibovespa-service";
+import { IpcaService } from "../../services/ipca-service";
 
 const investmentOptions: ButtonOptions[] = [
-  { title: "CDI", value: "cdi" },
-  { title: "IPCA", value: "ipca" },
-  { title: "Poupança", value: "poupanca" },
-  { title: "IBOVESPA", value: "ibovespa" },
+  { title: "IPCA", value: "ipca", backgroundColor: Colors.RED },
+  { title: "Poupança", value: "poupança", backgroundColor: Colors.BROWN },
+  { title: "IBOVESPA", value: "ibovespa", backgroundColor: Colors.STRONG_GRAY },
+  { title: "CDI", value: "cdi", backgroundColor: Colors.GRAY },
 ];
 
 const periodOptions: ButtonOptions[] = [
   { title: "1 ano", value: "cdi" },
   { title: "2 anos", value: "ipca" },
-  { title: "5 anos", value: "poupanca" },
+  { title: "5 anos", value: "poupança" },
   { title: "10 anos", value: "ibovespa" },
 ];
 
 const cdiService = new CdiService();
+const realStateService = new RealStateService();
+const savingsAccountService = new SavingsAccountService();
+const ibovespaService = new IbovespaService();
+const ipcaService = new IpcaService();
+
 const cdi = cdiService.getvalue();
+const realState = realStateService.getRealState();
+const savingsAccount = savingsAccountService.getValues();
+const ibovespa = ibovespaService.getValues();
+const ipca = ipcaService.getValues();
+
+const calculateIncome = (
+  percentsList: { date: string; value: number }[],
+  investmentValue: number
+) => {
+  return percentsList.reduce((acc: number[], curr, idx) => {
+    if (acc.length > 0) {
+      return [...acc, acc[idx - 1] * (curr.value / 100 + 1)];
+    } else return [investmentValue * (curr.value / 100 + 1)];
+  }, []);
+};
+
+const calculateFinalIncome = (
+  percentsList: { date: string; value: number }[],
+  investmentValue: number
+) => {
+  return calculateIncome(percentsList, investmentValue)[
+    percentsList.length - 1
+  ];
+};
+
+const calculatePercentMoreThenIpca = (investmentValue: number) => {
+  const realStateFinalIncome = calculateFinalIncome(realState, investmentValue);
+  const ipcaFinalIncome = calculateFinalIncome(ipca, investmentValue);
+
+  const differenceOfIncomes = realStateFinalIncome - ipcaFinalIncome;
+  return `${((differenceOfIncomes / ipcaFinalIncome) * 100)
+    .toFixed(2)
+    .replace(".", ",")}%`;
+};
 
 const getDataset = (label: string, investmentValue: number) => {
   return {
-    cdi: {
-      label: "CDI",
-      data: cdi.reduce((acc: number[], curr, idx) => {
-        if (acc.length > 0) {
-          return [...acc, curr.value * investmentValue + acc[idx - 1]];
-        } else return [investmentValue];
-      }, []),
-      borderColor: Colors.RED,
-      backgroundColor: Colors.RED,
-      pointHoverBackgroundColor: Colors.RED,
+    realState: {
+      label: "Litoral Catarinense",
+      data: calculateIncome(realState, investmentValue),
+      borderColor: Colors.PRIMARY,
+      backgroundColor: Colors.PRIMARY,
+      pointHoverBackgroundColor: Colors.PRIMARY,
       pointHoverBorderColor: Colors.WHITE,
       pointHoverRadius: 8,
       pointHoverBorderWidth: 2,
       yAxisID: "y",
     },
+
     ipca: {
       label: "IPCA",
-      data: cdi.map(({ value }) => value),
-      borderColor: Colors.PRIMARY,
-      backgroundColor: Colors.PRIMARY,
-      pointBackgroundColor: Colors.PRIMARY,
-      pointHoverBackgroundColor: Colors.PRIMARY,
+      data: calculateIncome(ipca, investmentValue),
+      borderColor: Colors.RED,
+      backgroundColor: Colors.RED,
+      pointBackgroundColor: Colors.RED,
+      pointHoverBackgroundColor: Colors.RED,
       pointHoverRadius: 8,
       pointHoverBorderColor: Colors.WHITE,
       pointHoverBorderWidth: 2,
-      yAxisID: "y1",
+      yAxisID: "y",
+    },
+    poupança: {
+      label: "Poupança",
+      data: calculateIncome(savingsAccount, investmentValue),
+      borderColor: Colors.BROWN,
+      backgroundColor: Colors.BROWN,
+      pointHoverBackgroundColor: Colors.BROWN,
+      pointHoverBorderColor: Colors.WHITE,
+      pointHoverRadius: 8,
+      pointHoverBorderWidth: 2,
+      yAxisID: "y",
+    },
+    ibovespa: {
+      label: "IBOVESPA",
+      data: calculateIncome(ibovespa, investmentValue),
+      borderColor: Colors.STRONG_GRAY,
+      backgroundColor: Colors.STRONG_GRAY,
+      pointHoverBackgroundColor: Colors.STRONG_GRAY,
+      pointHoverBorderColor: Colors.WHITE,
+      pointHoverRadius: 8,
+      pointHoverBorderWidth: 2,
+      yAxisID: "y",
+    },
+    cdi: {
+      label: "CDI",
+      data: calculateIncome(cdi, investmentValue),
+      borderColor: Colors.GRAY,
+      backgroundColor: Colors.GRAY,
+      pointHoverBackgroundColor: Colors.GRAY,
+      pointHoverBorderColor: Colors.WHITE,
+      pointHoverRadius: 8,
+      pointHoverBorderWidth: 2,
+      yAxisID: "y",
     },
   }[label];
 };
 
 const getInitialData = (
-  initialValue: number
+  initialValue: number,
+  datasets: string[]
 ): { labels: string[]; datasets: any[] } => {
-  const labels = cdi.map(({ date }) => date);
+  const labels = realState.map(({ date }) => date);
 
   return {
     labels,
-    datasets: [getDataset("cdi", initialValue)],
+    datasets: datasets.map((dataset) => getDataset(dataset, initialValue)),
   };
 };
 
+const getNumberFromCurrency = (currency: string): number => {
+  return parseFloat(
+    currency.replace("R$ ", "").replaceAll(".", "").replace(",", ".")
+  );
+};
+
 export const ComparatorPage = () => {
-  const initialValue = 10;
-  const [chartData, setChartData] = useState(getInitialData(initialValue));
-  const [investments, setInvestments] = useState<string[]>(() => ["cdi"]);
+  const [initialValue, setInitialValue] = useState("R$ 50.000,00");
+
+  const [chartData, setChartData] = useState(
+    getInitialData(getNumberFromCurrency(initialValue), ["realState", "ipca"])
+  );
+
+  const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
+
+  const teste = useCallback(() => {
+    if (chartData) {
+      const datasets: string[] = chartData.datasets.map((dataset, idx) => {
+        if (idx === 0) {
+          return "realState";
+        } else {
+          return dataset.label.toLowerCase();
+        }
+      });
+      setChartData(
+        getInitialData(getNumberFromCurrency(initialValue), datasets)
+      );
+    }
+  }, [initialValue]);
+
+  useEffect(() => {
+    teste();
+  }, [initialValue, teste]);
 
   const handleInvestmentsChange = (event: any, newInvestments: string[]) => {
     setInvestments(newInvestments);
@@ -94,7 +197,10 @@ export const ComparatorPage = () => {
     } else {
       setChartData((old) => ({
         ...old,
-        datasets: [...old.datasets, getDataset(newInvestment, initialValue)],
+        datasets: [
+          ...old.datasets,
+          getDataset(newInvestment, getNumberFromCurrency(initialValue)),
+        ],
       }));
     }
   };
@@ -118,11 +224,30 @@ export const ComparatorPage = () => {
           }}
         >
           <CurrencyTextField
+            value={initialValue}
+            setValue={setInitialValue}
             id="investment-value"
             label="Quanto você quer investir?"
           />
         </div>
-        <Results />
+        <Results
+          income={
+            calculateFinalIncome(
+              realState,
+              getNumberFromCurrency(initialValue)
+            ) - getNumberFromCurrency(initialValue)
+          }
+          result={calculateFinalIncome(
+            realState,
+            getNumberFromCurrency(initialValue)
+          )}
+          compare={{
+            name: "inflação",
+            percentIncome: calculatePercentMoreThenIpca(
+              getNumberFromCurrency(initialValue)
+            ),
+          }}
+        />
       </div>
       <div
         style={{
@@ -141,7 +266,7 @@ export const ComparatorPage = () => {
         <ToggleButtonsExclusive buttonsOptions={periodOptions} />
       </div>
 
-      <MultipleLineChart data={chartData} />
+      {chartData?.labels?.length > 0 && <MultipleLineChart data={chartData} />}
     </div>
   );
 };

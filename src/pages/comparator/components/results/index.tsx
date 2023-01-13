@@ -1,14 +1,12 @@
 import { Colors } from "../../../../styles/colors";
 
-export const Results = () => {
-  const result = 4000000;
-  const income = 3000000;
+interface ResultProps {
+  result: number;
+  income: number;
+  compare: { name: string; percentIncome: string };
+}
 
-  const compare = {
-    name: "CDI",
-    percentIncome: "250%",
-  };
-
+export const Results: React.FC<ResultProps> = ({ result, income, compare }) => {
   return (
     <div>
       <p>Esse seria seu patrimônio se tivesse investido em imóveis</p>
@@ -27,7 +25,7 @@ export const Results = () => {
       </p>
 
       <p>
-        {compare.percentIncome} a mais que o{" "}
+        {compare.percentIncome} a mais que a{" "}
         <span style={styles.comparatorName}>{compare.name}</span>
       </p>
     </div>

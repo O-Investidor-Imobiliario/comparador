@@ -1,16 +1,20 @@
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 
 export interface CurrencyTextFieldProps {
   label: string;
   id: string;
+  value: string;
+  setValue: Function;
 }
 
-const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({ label, id }) => {
-  const [value, setValue] = useState("R$ 0,00");
-
+const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
+  label,
+  id,
+  value,
+  setValue,
+}) => {
   const handleChange = (value: string) => {
-    if (value === "R$ ") {
+    if (value === "R$ " || value.length === 0) {
       value = "0";
     }
 

@@ -11,7 +11,6 @@ import {
   Point,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { Colors } from "../../styles/colors";
 
 ChartJS.register(
   CategoryScale,
@@ -40,10 +39,29 @@ const options = {
     y: {
       ticks: {
         callback: function (value: any) {
-          return value.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          });
+          if (value >= 1000000000000) {
+            return value.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          }
+          if (value >= 1000000000) {
+            return `R$ ${value / 1000000000} B`;
+          }
+          if (value >= 1000000) {
+            return `R$ ${value / 1000000}M`;
+          }
+          if (value > 1000) {
+            return `R$ ${value / 1000} K`;
+          } else {
+            return `R$ ${value}`;
+          }
+
+          // console.log(value);
+          // return value.toLocaleString("pt-BR", {
+          //   style: "currency",
+          //   currency: "BRL",
+          // });
         },
       },
     },
@@ -53,7 +71,7 @@ const options = {
   },
   elements: {
     point: {
-      radius: 0,
+      radius: 1,
     },
   },
   plugins: {
