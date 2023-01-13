@@ -7,6 +7,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
+  Point,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { Colors } from "../../styles/colors";
@@ -22,6 +24,7 @@ ChartJS.register(
 );
 
 const options = {
+  maintainAspectRatio: false,
   responsive: true,
   stacked: false,
   interaction: {
@@ -33,16 +36,6 @@ const options = {
       grid: {
         display: false,
       },
-      //   ticks: {
-      //     callback: function (value, index) {
-      //       const label = this.getLabelForValue(value);
-      //       const splitDate = label.split("/");
-      //       const formattedDate = `${parseInt(splitDate[0]) < 10 ? "0" : ""}${
-      //         splitDate[0]
-      //       }/${splitDate[1]}`;
-      //       return formattedDate;
-      //     },
-      //   },
     },
     y: {
       ticks: {
@@ -70,41 +63,16 @@ const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+export interface MultipleLineChartProps {
+  data: ChartData<"line", (number | Point | null)[], unknown>;
+}
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map(() => Math.random()),
-      borderColor: Colors.PRIMARY,
-      backgroundColor: Colors.PRIMARY,
-      pointBackgroundColor: Colors.PRIMARY,
-      pointHoverBackgroundColor: Colors.PRIMARY,
-      pointHoverRadius: 8,
-      pointHoverBorderColor: Colors.WHITE,
-      pointHoverBorderWidth: 2,
-      yAxisID: "y",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => Math.random()),
-      borderColor: Colors.RED,
-      backgroundColor: Colors.RED,
-      pointHoverBackgroundColor: Colors.RED,
-      pointHoverBorderColor: Colors.WHITE,
-      pointHoverRadius: 8,
-      pointHoverBorderWidth: 2,
-      yAxisID: "y1",
-    },
-  ],
-};
-
-export function MultipleLineChart() {
+export const MultipleLineChart: React.FC<MultipleLineChartProps> = ({
+  data,
+}) => {
   return (
-    <div style={{ width: "50rem" }}>
+    <div style={{ height: 374 }}>
       <Line options={options} data={data} />
     </div>
   );
-}
+};

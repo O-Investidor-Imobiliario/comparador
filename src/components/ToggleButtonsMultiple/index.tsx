@@ -12,27 +12,29 @@ export interface ButtonOptions {
 }
 
 export interface ToggleButtonsMultipleProps {
+  label: string;
   buttonsOptions: ButtonOptions[];
+  onChange: (
+    event: React.MouseEvent<HTMLElement>,
+    newFormats: string[]
+  ) => void;
+  values: string[];
 }
 
 export default function ToggleButtonsMultiple({
+  label,
   buttonsOptions,
+  onChange,
+  values,
 }: ToggleButtonsMultipleProps) {
-  const [formats, setFormats] = React.useState<string[]>(() => []);
-
-  const handleFormat = (
-    event: React.MouseEvent<HTMLElement>,
-    newFormats: string[]
-  ) => {
-    setFormats(newFormats);
-  };
-
   const buttonStyle = {
     borderRadius: 5,
     backgroundColor: Colors.SUPER_LIGHT_GRAY,
     borderWidth: 0,
     textTransform: "none" as Property.TextTransform,
-    padding: "8px 12px",
+    padding: "8px 16px",
+    margin: 0,
+    color: `${Colors.PRIMARY}80`,
   };
 
   const buttonSelectedStyle = {
@@ -42,23 +44,33 @@ export default function ToggleButtonsMultiple({
   };
 
   return (
-    <ToggleButtonGroup
-      value={formats}
-      onChange={handleFormat}
-      aria-label="text formatting"
-      color="primary"
-      style={{ display: "flex", width: 330, justifyContent: "space-between" }}
-    >
-      {buttonsOptions.map(({ value, title }, index) => (
-        <ToggleButton
-          key={`toggle-button-${index}`}
-          value={value}
-          aria-label={value}
-          style={formats.includes(value) ? buttonSelectedStyle : buttonStyle}
-        >
-          {title}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+    <div>
+      <p>{label}</p>{" "}
+      <ToggleButtonGroup
+        value={values}
+        onChange={onChange}
+        aria-label="text formatting"
+        color="primary"
+        style={{
+          display: "flex",
+          width: 402,
+          justifyContent: "space-between",
+          height: 48,
+        }}
+      >
+        {buttonsOptions.map(({ value, title }, index) => {
+          return (
+            <ToggleButton
+              key={`toggle-button-${index}`}
+              value={value}
+              aria-label={value}
+              style={values.includes(value) ? buttonSelectedStyle : buttonStyle}
+            >
+              {title}
+            </ToggleButton>
+          );
+        })}
+      </ToggleButtonGroup>
+    </div>
   );
 }

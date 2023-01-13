@@ -32,8 +32,12 @@ export default function ToggleButtonsExclusive({
     backgroundColor: Colors.SUPER_LIGHT_GRAY,
     borderWidth: 0,
     textTransform: "none" as Property.TextTransform,
-    padding: "8px 12px",
-    // "&:focus": { border: "none", outline: "none" },
+    padding: "8px 16px",
+    height: 32,
+    marginTop: 4,
+    marginBottom: 4,
+    color: `${Colors.PRIMARY}80`,
+    fontSize: 16,
   };
 
   const buttonSelectedStyle = {
@@ -51,10 +55,11 @@ export default function ToggleButtonsExclusive({
       color="primary"
       style={{
         display: "flex",
-        width: 367,
         justifyContent: "space-between",
         backgroundColor: Colors.SUPER_LIGHT_GRAY,
-        padding: 10,
+        padding: "4px 8px",
+        gap: 8,
+        alignItems: "center",
       }}
     >
       {buttonsOptions.map(({ value, title }, index) => (

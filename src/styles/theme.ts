@@ -1,6 +1,13 @@
 import { createTheme } from "@mui/material/styles";
+import { Colors } from "./colors";
 
 export const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: '"Poppins" sans-serif',
+      fontSize: 16,
+    },
+  },
   components: {
     MuiTextField: {
       defaultProps: {
