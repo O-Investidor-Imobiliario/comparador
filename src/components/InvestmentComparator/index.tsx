@@ -43,8 +43,6 @@ export const InvestmentComparator = () => {
     window.addEventListener("resize", handleResize);
   });
 
-  console.log(width);
-
   useEffect(
     useCallback(() => {
       if (chartData) {
