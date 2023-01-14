@@ -1,22 +1,5 @@
-import { AxiosClient } from "../infra/clients/axios";
-import { CDI } from "./types/cdi";
-
-export namespace valueService {
-  export interface Input {
-    startDate?: string;
-    endDate?: string;
-  }
-
-  export type Output = CDI[];
-}
-
-export class CdiService extends AxiosClient {
-  // implements GetvalueService {
-  constructor() {
-    super("https://date.nasdaq.com/api/v3/datesets");
-  }
-
-  getvalue(): valueService.Output {
+export class CdiService {
+  getvalue() {
     const mensal = [
       {
         date: "01/2000",
