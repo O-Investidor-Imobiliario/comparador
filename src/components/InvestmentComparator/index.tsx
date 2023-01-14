@@ -23,6 +23,7 @@ export const InvestmentComparator = () => {
   const ipcaService = new IpcaService();
   const ipca = ipcaService.getValues();
 
+  const [width, setWidth] = useState(window.innerWidth);
   const [initialValue, setInitialValue] = useState("R$ 50.000,00");
   const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
   const [period, setPeriod] = useState<string>("10");
@@ -33,6 +34,16 @@ export const InvestmentComparator = () => {
       parseInt(period)
     )
   );
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+  });
+
+  console.log(width);
 
   useEffect(
     useCallback(() => {
@@ -54,6 +65,32 @@ export const InvestmentComparator = () => {
       }
     }, [initialValue, period]),
     [initialValue, period]
+  );
+
+  const ResultComponent = () => (
+    <InvestmentComparatorResults
+      income={
+        calculateFinalIncome(
+          realState,
+          getNumberFromCurrency(initialValue),
+          parseInt(period)
+        ) - getNumberFromCurrency(initialValue)
+      }
+      result={calculateFinalIncome(
+        realState,
+        getNumberFromCurrency(initialValue),
+        parseInt(period)
+      )}
+      compare={{
+        name: "inflação",
+        percentIncome: calculatePercentDifferenceBetweenIncomes(
+          getNumberFromCurrency(initialValue),
+          parseInt(period),
+          realState,
+          ipca
+        ),
+      }}
+    />
   );
 
   const handleInvestmentsChange = (event: any, newInvestments: string[]) => {
@@ -89,7 +126,13 @@ export const InvestmentComparator = () => {
   return (
     <div style={styles.container}>
       <div style={styles.headerContainer}>
-        <div style={styles.textFieldContainer}>
+        <div
+          style={
+            width >= 1024
+              ? styles.textFieldContainer
+              : { ...styles.textFieldContainer, width: "100%" }
+          }
+        >
           <CurrencyTextField
             value={initialValue}
             setValue={setInitialValue}
@@ -97,29 +140,8 @@ export const InvestmentComparator = () => {
             label="Quanto você quer investir?"
           />
         </div>
-        <InvestmentComparatorResults
-          income={
-            calculateFinalIncome(
-              realState,
-              getNumberFromCurrency(initialValue),
-              parseInt(period)
-            ) - getNumberFromCurrency(initialValue)
-          }
-          result={calculateFinalIncome(
-            realState,
-            getNumberFromCurrency(initialValue),
-            parseInt(period)
-          )}
-          compare={{
-            name: "inflação",
-            percentIncome: calculatePercentDifferenceBetweenIncomes(
-              getNumberFromCurrency(initialValue),
-              parseInt(period),
-              realState,
-              ipca
-            ),
-          }}
-        />
+
+        {width >= 1024 && <ResultComponent />}
       </div>
       <div style={styles.filtersContainer}>
         <ToggleButtonsMultiple
@@ -158,6 +180,12 @@ export const InvestmentComparator = () => {
       </div>
 
       {chartData?.labels?.length > 0 && <MultipleLineChart data={chartData} />}
+
+      {width < 1024 && (
+        <div>
+          <ResultComponent />
+        </div>
+      )}
     </div>
   );
 };

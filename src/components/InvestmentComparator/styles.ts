@@ -3,6 +3,7 @@ export const styles = {
     width: 920,
   },
   headerContainer: {
+    minHeight: 200,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

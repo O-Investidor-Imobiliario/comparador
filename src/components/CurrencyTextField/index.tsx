@@ -1,4 +1,5 @@
 import TextField from "@mui/material/TextField";
+import { useEffect, useState } from "react";
 
 export interface CurrencyTextFieldProps {
   label: string;
@@ -13,15 +14,29 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
   value,
   setValue,
 }) => {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+  });
+
   const handleChange = (value: string) => {
     if (value === "R$ " || value.length === 0) {
       value = "0";
     }
+
     value = value.replaceAll(".", "").replace(",", "").replace(/\D/g, "");
+
     const options = { minimumFractionDigits: 2 };
+
     const result = new Intl.NumberFormat("pt-BR", options).format(
       parseFloat(value) / 100
     );
+
     if (
       parseFloat(result.replaceAll(".", "").replace(",", ".")) <= 1000000000
     ) {
@@ -36,9 +51,14 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
       variant="outlined"
       value={value}
       onChange={(event) => handleChange(event.target.value)}
-      InputProps={{ style: { fontWeight: "bold", fontSize: 24 } }}
+      InputProps={{
+        style:
+          width >= 1024
+            ? { fontWeight: "bold", fontSize: 24 }
+            : { fontWeight: "bold", fontSize: 48, padding: 8 },
+      }}
       InputLabelProps={{
-        style: { fontSize: 18 },
+        style: width >= 1024 ? { fontSize: 18 } : { fontSize: 48, top: -20 },
       }}
       style={{ width: "100%" }}
     />

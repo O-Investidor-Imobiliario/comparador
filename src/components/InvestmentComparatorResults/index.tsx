@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { InfoTooltip } from "../InfoTooltip";
 import { styles } from "./styles";
 
@@ -10,11 +11,21 @@ interface InvestmentComparatorResultsProps {
 export const InvestmentComparatorResults: React.FC<
   InvestmentComparatorResultsProps
 > = ({ result, income, compare }) => {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+  });
+
   return (
-    <div>
+    <div style={styles(width).container}>
       <p>Esse seria seu patrimônio se tivesse investido em imóveis</p>
-      <div style={styles.numberAndTooltipContainer}>
-        <p style={styles.result}>
+      <div style={styles(width).numberAndTooltipContainer}>
+        <p style={styles(width).result}>
           {result &&
             result.toLocaleString("pt-BR", {
               style: "currency",
@@ -26,7 +37,7 @@ export const InvestmentComparatorResults: React.FC<
 
       <p>
         Rendimento de
-        <span style={styles.incomeValue}>
+        <span style={styles(width).incomeValue}>
           {" " +
             income.toLocaleString("pt-BR", {
               style: "currency",
@@ -37,7 +48,7 @@ export const InvestmentComparatorResults: React.FC<
 
       <p>
         {compare.percentIncome} a mais que a{" "}
-        <span style={styles.comparatorName}>{compare.name}</span>
+        <span style={styles(width).comparatorName}>{compare.name}</span>
       </p>
     </div>
   );
