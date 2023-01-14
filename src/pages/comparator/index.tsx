@@ -23,10 +23,10 @@ const investmentOptions: ButtonOptions[] = [
 ];
 
 const periodOptions: ButtonOptions[] = [
-  { title: "1 ano", value: "cdi" },
-  { title: "2 anos", value: "ipca" },
-  { title: "5 anos", value: "poupança" },
-  { title: "10 anos", value: "ibovespa" },
+  { title: "1 ano", value: "1" },
+  { title: "2 anos", value: "2" },
+  { title: "5 anos", value: "5" },
+  { title: "10 anos", value: "10" },
 ];
 
 const cdiService = new CdiService();
@@ -71,11 +71,15 @@ const calculatePercentMoreThenIpca = (investmentValue: number) => {
     .replace(".", ",")}%`;
 };
 
-const getDataset = (label: string, investmentValue: number) => {
+const getDataset = (
+  label: string,
+  investmentValue: number,
+  dataSize: number
+) => {
   return {
     realState: {
       label: "Litoral Catarinense",
-      data: calculateIncome(realState, investmentValue),
+      data: calculateIncome(realState.slice(dataSize), investmentValue),
       borderColor: Colors.PRIMARY,
       backgroundColor: Colors.PRIMARY,
       pointHoverBackgroundColor: Colors.PRIMARY,
@@ -87,7 +91,7 @@ const getDataset = (label: string, investmentValue: number) => {
 
     ipca: {
       label: "IPCA",
-      data: calculateIncome(ipca, investmentValue),
+      data: calculateIncome(ipca.slice(dataSize), investmentValue),
       borderColor: Colors.RED,
       backgroundColor: Colors.RED,
       pointBackgroundColor: Colors.RED,
@@ -99,7 +103,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     poupança: {
       label: "Poupança",
-      data: calculateIncome(savingsAccount, investmentValue),
+      data: calculateIncome(savingsAccount.slice(dataSize), investmentValue),
       borderColor: Colors.BROWN,
       backgroundColor: Colors.BROWN,
       pointHoverBackgroundColor: Colors.BROWN,
@@ -110,7 +114,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     ibovespa: {
       label: "IBOVESPA",
-      data: calculateIncome(ibovespa, investmentValue),
+      data: calculateIncome(ibovespa.slice(dataSize), investmentValue),
       borderColor: Colors.STRONG_GRAY,
       backgroundColor: Colors.STRONG_GRAY,
       pointHoverBackgroundColor: Colors.STRONG_GRAY,
@@ -121,7 +125,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     cdi: {
       label: "CDI",
-      data: calculateIncome(cdi, investmentValue),
+      data: calculateIncome(cdi.slice(dataSize), investmentValue),
       borderColor: Colors.GRAY,
       backgroundColor: Colors.GRAY,
       pointHoverBackgroundColor: Colors.GRAY,
@@ -135,13 +139,14 @@ const getDataset = (label: string, investmentValue: number) => {
 
 const getInitialData = (
   initialValue: number,
-  datasets: string[]
+  datasets: string[],
+  labels: string[]
 ): { labels: string[]; datasets: any[] } => {
-  const labels = realState.map(({ date }) => date);
-
   return {
     labels,
-    datasets: datasets.map((dataset) => getDataset(dataset, initialValue)),
+    datasets: datasets.map((dataset) =>
+      getDataset(dataset, initialValue, labels.length)
+    ),
   };
 };
 
@@ -154,9 +159,16 @@ const getNumberFromCurrency = (currency: string): number => {
 export const ComparatorPage = () => {
   const [initialValue, setInitialValue] = useState("R$ 50.000,00");
   const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
+  const [period, setPeriod] = useState<string>("10");
   const [chartData, setChartData] = useState(
-    getInitialData(getNumberFromCurrency(initialValue), ["realState", "ipca"])
+    getInitialData(
+      getNumberFromCurrency(initialValue),
+      ["realState", "ipca"],
+      realState.map(({ date }) => date)
+    )
   );
+
+  console.log(realState.map(({ date }) => date));
 
   const setDataSets = useCallback(() => {
     if (chartData) {
@@ -168,14 +180,18 @@ export const ComparatorPage = () => {
         }
       });
       setChartData(
-        getInitialData(getNumberFromCurrency(initialValue), datasets)
+        getInitialData(
+          getNumberFromCurrency(initialValue),
+          datasets,
+          realState.map(({ date }) => date).slice(parseInt(period) * 12)
+        )
       );
     }
   }, [initialValue]);
 
   useEffect(() => {
     setDataSets();
-  }, [initialValue, setDataSets]);
+  }, [initialValue]);
 
   const handleInvestmentsChange = (event: any, newInvestments: string[]) => {
     setInvestments(newInvestments);
@@ -202,6 +218,48 @@ export const ComparatorPage = () => {
         ],
       }));
     }
+  };
+
+  const handlePeriodChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newSelected: string
+  ) => {
+    setPeriod(newSelected);
+    // if (
+    //   chartData.datasets?.[0].data.length > parseInt(newSelected) ||
+    //   chartData.datasets?.[0].data.length < parseInt(newSelected)
+    // ) {
+    //   console.log(newSelected);
+
+    //   const existingDatasetsLabels = chartData.datasets.map(
+    //     ({ label }, idx) => {
+    //       if (idx === 0) {
+    //         return "realState";
+    //       }
+    //       return label.toLowerCase();
+    //     }
+    //   );
+
+    //   const existingDataSets = existingDatasetsLabels.map((dataset) => {
+    //     return getDataset(dataset, getNumberFromCurrency(initialValue));
+    //   });
+
+    //   const slicedExistingDatasets = existingDataSets.map((newDataset) => {
+    //     return {
+    //       ...newDataset,
+    //       data: newDataset?.data.slice(parseInt(newSelected) * 12),
+    //     };
+    //   });
+
+    //   console.log(slicedExistingDatasets);
+
+    //   const slicedLabels = chartData.labels.slice(parseInt(newSelected) * 12);
+
+    //   setChartData({
+    //     labels: slicedLabels,
+    //     datasets: slicedExistingDatasets,
+    //   });
+    // }
   };
 
   return (
@@ -262,7 +320,11 @@ export const ComparatorPage = () => {
           onChange={handleInvestmentsChange}
           values={investments}
         />
-        <ToggleButtonsExclusive buttonsOptions={periodOptions} />
+        <ToggleButtonsExclusive
+          buttonsOptions={periodOptions}
+          selected={period}
+          onChange={handlePeriodChange}
+        />
       </div>
 
       {chartData?.labels?.length > 0 && <MultipleLineChart data={chartData} />}
