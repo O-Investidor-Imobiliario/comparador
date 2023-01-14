@@ -1122,10 +1122,6 @@ export class CdiService extends AxiosClient {
         date: "12/2022",
         value: 1.12,
       },
-      {
-        date: "01/2023",
-        value: 0.36,
-      },
     ];
 
     const anual = [

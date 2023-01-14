@@ -11,12 +11,16 @@ export const Results: React.FC<ResultProps> = ({ result, income, compare }) => {
     <div>
       <p>Esse seria seu patrimônio se tivesse investido em imóveis</p>
       <p style={styles.result}>
-        {result.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+        {result &&
+          result.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
       </p>
       <p>
         Rendimento de
         <span style={styles.incomeValue}>
-          {" " +
+          {" " + income &&
             income.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",

@@ -43,27 +43,40 @@ const ipca = ipcaService.getValues();
 
 const calculateIncome = (
   percentsList: { date: string; value: number }[],
-  investmentValue: number
+  investmentValue: number,
+  period: number = 5
 ) => {
-  return percentsList.reduce((acc: number[], curr, idx) => {
-    if (acc.length > 0) {
-      return [...acc, acc[idx - 1] * (curr.value / 100 + 1)];
-    } else return [investmentValue * (curr.value / 100 + 1)];
-  }, []);
+  return percentsList
+    .filter((item) => {
+      const itemYear = parseInt(item.date.split("/")[1]);
+      return itemYear >= 2022 - period + 1; // && itemYear >= 2022;
+    })
+    .reduce((acc: number[], curr, idx) => {
+      if (acc.length > 0) {
+        return [...acc, acc[idx - 1] * (curr.value / 100 + 1)];
+      } else return [investmentValue];
+    }, []);
 };
 
 const calculateFinalIncome = (
   percentsList: { date: string; value: number }[],
-  investmentValue: number
+  investmentValue: number,
+  period: number
 ) => {
-  return calculateIncome(percentsList, investmentValue)[
-    percentsList.length - 1
-  ];
+  const incomes = calculateIncome(percentsList, investmentValue, period);
+  return incomes[incomes.length - 1];
 };
 
-const calculatePercentMoreThenIpca = (investmentValue: number) => {
-  const realStateFinalIncome = calculateFinalIncome(realState, investmentValue);
-  const ipcaFinalIncome = calculateFinalIncome(ipca, investmentValue);
+const calculatePercentMoreThenIpca = (
+  investmentValue: number,
+  period: number
+) => {
+  const realStateFinalIncome = calculateFinalIncome(
+    realState,
+    investmentValue,
+    period
+  );
+  const ipcaFinalIncome = calculateFinalIncome(ipca, investmentValue, period);
 
   const differenceOfIncomes = realStateFinalIncome - ipcaFinalIncome;
   return `${((differenceOfIncomes / ipcaFinalIncome) * 100)
@@ -71,11 +84,11 @@ const calculatePercentMoreThenIpca = (investmentValue: number) => {
     .replace(".", ",")}%`;
 };
 
-const getDataset = (label: string, investmentValue: number) => {
+const getDataset = (label: string, investmentValue: number, period: number) => {
   return {
     realState: {
       label: "Litoral Catarinense",
-      data: calculateIncome(realState, investmentValue),
+      data: calculateIncome(realState, investmentValue, period),
       borderColor: Colors.PRIMARY,
       backgroundColor: Colors.PRIMARY,
       pointHoverBackgroundColor: Colors.PRIMARY,
@@ -87,7 +100,7 @@ const getDataset = (label: string, investmentValue: number) => {
 
     ipca: {
       label: "IPCA",
-      data: calculateIncome(ipca, investmentValue),
+      data: calculateIncome(ipca, investmentValue, period),
       borderColor: Colors.RED,
       backgroundColor: Colors.RED,
       pointBackgroundColor: Colors.RED,
@@ -99,7 +112,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     poupança: {
       label: "Poupança",
-      data: calculateIncome(savingsAccount, investmentValue),
+      data: calculateIncome(savingsAccount, investmentValue, period),
       borderColor: Colors.BROWN,
       backgroundColor: Colors.BROWN,
       pointHoverBackgroundColor: Colors.BROWN,
@@ -110,7 +123,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     ibovespa: {
       label: "IBOVESPA",
-      data: calculateIncome(ibovespa, investmentValue),
+      data: calculateIncome(ibovespa, investmentValue, period),
       borderColor: Colors.STRONG_GRAY,
       backgroundColor: Colors.STRONG_GRAY,
       pointHoverBackgroundColor: Colors.STRONG_GRAY,
@@ -121,7 +134,7 @@ const getDataset = (label: string, investmentValue: number) => {
     },
     cdi: {
       label: "CDI",
-      data: calculateIncome(cdi, investmentValue),
+      data: calculateIncome(cdi, investmentValue, period),
       borderColor: Colors.GRAY,
       backgroundColor: Colors.GRAY,
       pointHoverBackgroundColor: Colors.GRAY,
@@ -135,13 +148,21 @@ const getDataset = (label: string, investmentValue: number) => {
 
 const getInitialData = (
   initialValue: number,
-  datasets: string[]
+  datasets: string[],
+  period: number
 ): { labels: string[]; datasets: any[] } => {
-  const labels = realState.map(({ date }) => date);
+  const labels = realState
+    .filter((item) => {
+      const itemYear = parseInt(item.date.split("/")[1]);
+      return itemYear >= 2022 - period + 1; // && itemYear >= 2022;
+    })
+    .map(({ date }) => date);
 
   return {
     labels,
-    datasets: datasets.map((dataset) => getDataset(dataset, initialValue)),
+    datasets: datasets.map((dataset) =>
+      getDataset(dataset, initialValue, period)
+    ),
   };
 };
 
@@ -156,10 +177,12 @@ export const ComparatorPage = () => {
   const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
   const [period, setPeriod] = useState<string>("10");
   const [chartData, setChartData] = useState(
-    getInitialData(getNumberFromCurrency(initialValue), ["realState", "ipca"])
+    getInitialData(
+      getNumberFromCurrency(initialValue),
+      ["realState", "ipca"],
+      parseInt(period)
+    )
   );
-
-  // console.log(realState.map(({ date }) => date));
 
   const setDataSets = useCallback(() => {
     if (chartData) {
@@ -171,14 +194,18 @@ export const ComparatorPage = () => {
         }
       });
       setChartData(
-        getInitialData(getNumberFromCurrency(initialValue), datasets)
+        getInitialData(
+          getNumberFromCurrency(initialValue),
+          datasets,
+          parseInt(period)
+        )
       );
     }
-  }, [initialValue]);
+  }, [initialValue, period]);
 
   useEffect(() => {
     setDataSets();
-  }, [initialValue]);
+  }, [initialValue, period]);
 
   const handleInvestmentsChange = (event: any, newInvestments: string[]) => {
     setInvestments(newInvestments);
@@ -197,12 +224,15 @@ export const ComparatorPage = () => {
         ),
       }));
     } else {
-      console.log(parseInt(period) * 12);
       setChartData((old) => ({
         ...old,
         datasets: [
           ...old.datasets,
-          getDataset(newInvestment, getNumberFromCurrency(initialValue)),
+          getDataset(
+            newInvestment,
+            getNumberFromCurrency(initialValue),
+            parseInt(period)
+          ),
         ],
       }));
     }
@@ -244,17 +274,20 @@ export const ComparatorPage = () => {
           income={
             calculateFinalIncome(
               realState,
-              getNumberFromCurrency(initialValue)
+              getNumberFromCurrency(initialValue),
+              parseInt(period)
             ) - getNumberFromCurrency(initialValue)
           }
           result={calculateFinalIncome(
             realState,
-            getNumberFromCurrency(initialValue)
+            getNumberFromCurrency(initialValue),
+            parseInt(period)
           )}
           compare={{
             name: "inflação",
             percentIncome: calculatePercentMoreThenIpca(
-              getNumberFromCurrency(initialValue)
+              getNumberFromCurrency(initialValue),
+              parseInt(period)
             ),
           }}
         />
