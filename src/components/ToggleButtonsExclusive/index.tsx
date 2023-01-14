@@ -13,19 +13,16 @@ export interface ButtonOptions {
 
 export interface ToggleButtonsExclusiveProps {
   buttonsOptions: ButtonOptions[];
+  selected: string;
+  onChange: (event: React.MouseEvent<HTMLElement>, newSelected: string) => void;
 }
 
 export default function ToggleButtonsExclusive({
   buttonsOptions,
+  selected,
+  onChange,
 }: ToggleButtonsExclusiveProps) {
-  const [alignment, setAlignment] = React.useState<string | null>("left");
-
-  const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null
-  ) => {
-    setAlignment(newAlignment);
-  };
+  // const [selected, setSelected] = React.useState<string | null>("left");
 
   const buttonStyle = {
     borderRadius: 5,
@@ -48,9 +45,9 @@ export default function ToggleButtonsExclusive({
 
   return (
     <ToggleButtonGroup
-      value={alignment}
+      value={selected}
       exclusive
-      onChange={handleAlignment}
+      onChange={onChange}
       aria-label="text alignment"
       color="primary"
       style={{
@@ -68,7 +65,7 @@ export default function ToggleButtonsExclusive({
           value={value}
           aria-label={value}
           size="small"
-          style={alignment == value ? buttonSelectedStyle : buttonStyle}
+          style={selected == value ? buttonSelectedStyle : buttonStyle}
         >
           {title}
         </ToggleButton>
