@@ -30,18 +30,13 @@ export const calculatePercentDifferenceBetweenIncomes = (
   dataset1: { date: string; value: number }[],
   dataset2: { date: string; value: number }[]
 ) => {
-  const dataset1Income = calculateFinalIncome(
-    dataset1,
-    investmentValue,
-    period
-  );
-  const dataset2Income = calculateFinalIncome(
-    dataset2,
-    investmentValue,
-    period
-  );
+  const dataset1Income =
+    calculateFinalIncome(dataset1, investmentValue, period) - investmentValue;
+  const dataset2Income =
+    calculateFinalIncome(dataset2, investmentValue, period) - investmentValue;
 
   const differenceOfIncomes = dataset1Income - dataset2Income;
+
   return `${((differenceOfIncomes / dataset2Income) * 100)
     .toFixed(2)
     .replace(".", ",")}%`;
