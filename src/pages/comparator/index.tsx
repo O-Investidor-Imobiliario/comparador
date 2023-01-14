@@ -49,7 +49,7 @@ const calculateIncome = (
   return percentsList
     .filter((item) => {
       const itemYear = parseInt(item.date.split("/")[1]);
-      return itemYear >= 2022 - period + 1; // && itemYear >= 2022;
+      return itemYear >= 2022 - period + 1;
     })
     .reduce((acc: number[], curr, idx) => {
       if (acc.length > 0) {
@@ -154,7 +154,7 @@ const getInitialData = (
   const labels = realState
     .filter((item) => {
       const itemYear = parseInt(item.date.split("/")[1]);
-      return itemYear >= 2022 - period + 1; // && itemYear >= 2022;
+      return itemYear >= 2022 - period + 1;
     })
     .map(({ date }) => date);
 

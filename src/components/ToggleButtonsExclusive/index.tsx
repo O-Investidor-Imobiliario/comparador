@@ -22,8 +22,6 @@ export default function ToggleButtonsExclusive({
   selected,
   onChange,
 }: ToggleButtonsExclusiveProps) {
-  // const [selected, setSelected] = React.useState<string | null>("left");
-
   const buttonStyle = {
     borderRadius: 5,
     backgroundColor: Colors.ICE,

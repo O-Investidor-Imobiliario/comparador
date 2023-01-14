@@ -56,12 +56,6 @@ const options = {
           } else {
             return `R$ ${value}`;
           }
-
-          // console.log(value);
-          // return value.toLocaleString("pt-BR", {
-          //   style: "currency",
-          //   currency: "BRL",
-          // });
         },
       },
     },
