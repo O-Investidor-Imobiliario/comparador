@@ -17,14 +17,16 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
     if (value === "R$ " || value.length === 0) {
       value = "0";
     }
-
-    value = value.replace(".", "").replace(",", "").replace(/\D/g, "");
+    value = value.replaceAll(".", "").replace(",", "").replace(/\D/g, "");
     const options = { minimumFractionDigits: 2 };
     const result = new Intl.NumberFormat("pt-BR", options).format(
       parseFloat(value) / 100
     );
-
-    return setValue("R$ " + result);
+    if (
+      parseFloat(result.replaceAll(".", "").replace(",", ".")) <= 1000000000
+    ) {
+      return setValue("R$ " + result);
+    }
   };
 
   return (
