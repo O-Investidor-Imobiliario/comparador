@@ -7,8 +7,8 @@ import { Colors } from "../../styles/colors";
 import { useCallback, useEffect, useState } from "react";
 import { InvestmentComparatorResults } from "../InvestmentComparatorResults";
 
-import { IpcaService } from "../../services/ipca-service";
 import { RealStateService } from "../../services/real-state-service";
+import { SavingsAccountService } from "../../services/savings-account-service";
 import {
   calculateFinalIncome,
   calculatePercentDifferenceBetweenIncomes,
@@ -20,17 +20,17 @@ import { styles } from "./styles";
 export const InvestmentComparator = () => {
   const realStateService = new RealStateService();
   const realState = realStateService.getRealState();
-  const ipcaService = new IpcaService();
-  const ipca = ipcaService.getValues();
+  const savingsAccountService = new SavingsAccountService();
+  const savingsAccount = savingsAccountService.getValues();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [initialValue, setInitialValue] = useState("R$ 50.000,00");
-  const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
+  const [investments, setInvestments] = useState<string[]>(() => ["poupança"]);
   const [period, setPeriod] = useState<string>("10");
   const [chartData, setChartData] = useState(
     getInitialData(
       getNumberFromCurrency(initialValue),
-      ["realState", "ipca"],
+      ["realState", "poupança"],
       parseInt(period)
     )
   );
@@ -80,12 +80,12 @@ export const InvestmentComparator = () => {
         parseInt(period)
       )}
       compare={{
-        name: "inflação",
+        name: "Poupança",
         percentIncome: calculatePercentDifferenceBetweenIncomes(
           getNumberFromCurrency(initialValue),
           parseInt(period),
           realState,
-          ipca
+          savingsAccount
         ),
       }}
     />
@@ -145,12 +145,12 @@ export const InvestmentComparator = () => {
         <ToggleButtonsMultiple
           label={"Selecione os ativos para comparar"}
           buttonsOptions={[
-            { title: "IPCA", value: "ipca", backgroundColor: Colors.RED },
             {
               title: "Poupança",
               value: "poupança",
-              backgroundColor: Colors.BROWN,
+              backgroundColor: Colors.RED,
             },
+            { title: "IPCA", value: "ipca", backgroundColor: Colors.BROWN },
             {
               title: "IBOVESPA",
               value: "ibovespa",
