@@ -13,7 +13,7 @@ export const InvestmentComparatorResults: React.FC<
   return (
     <div>
       <p>Esse seria seu patrimônio se tivesse investido em imóveis</p>
-      <div style={{ display: "flex" }}>
+      <div style={styles.numberAndTooltipContainer}>
         <p style={styles.result}>
           {result &&
             result.toLocaleString("pt-BR", {

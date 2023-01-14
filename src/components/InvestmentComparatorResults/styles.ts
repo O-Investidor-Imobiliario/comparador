@@ -15,4 +15,5 @@ export const styles = {
     color: Colors.GREEN,
     fontWeight: "bold",
   },
+  numberAndTooltipContainer: { display: "flex" },
 };
