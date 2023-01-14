@@ -4,7 +4,7 @@ import { Colors } from "./colors";
 export const theme = createTheme({
   typography: {
     allVariants: {
-      fontFamily: '"Poppins" sans-serif',
+      fontFamily: "Poppins, sans-serif",
       fontSize: 16,
     },
   },
@@ -28,7 +28,7 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#222A59",
+      main: Colors.PRIMARY,
     },
     secondary: {
       main: "#EBEEF3",
