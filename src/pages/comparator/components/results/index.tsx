@@ -20,7 +20,7 @@ export const Results: React.FC<ResultProps> = ({ result, income, compare }) => {
       <p>
         Rendimento de
         <span style={styles.incomeValue}>
-          {" " + income &&
+          {" " +
             income.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",

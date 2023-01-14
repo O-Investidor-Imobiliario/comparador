@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@mui/material";
-import "./App.css";
 import { ComparatorPage } from "./pages/comparator";
 import { theme } from "./styles/theme";
 

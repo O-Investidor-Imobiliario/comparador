@@ -36,6 +36,10 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
       variant="outlined"
       value={value}
       onChange={(event) => handleChange(event.target.value)}
+      InputProps={{ style: { fontWeight: "bold", fontSize: 24 } }}
+      InputLabelProps={{
+        style: { fontSize: 18 },
+      }}
       style={{ width: "100%" }}
     />
   );
