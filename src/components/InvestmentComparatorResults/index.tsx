@@ -1,3 +1,4 @@
+import { InfoTooltip } from "../InfoTooltip";
 import { styles } from "./styles";
 
 interface InvestmentComparatorResultsProps {
@@ -12,13 +13,17 @@ export const InvestmentComparatorResults: React.FC<
   return (
     <div>
       <p>Esse seria seu patrimônio se tivesse investido em imóveis</p>
-      <p style={styles.result}>
-        {result &&
-          result.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
-      </p>
+      <div style={{ display: "flex" }}>
+        <p style={styles.result}>
+          {result &&
+            result.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}{" "}
+        </p>
+        <InfoTooltip title="Este valor é uma estimativa baseada na média de rendimento dos empreendimentos do Investidor Imobiliário" />
+      </div>
+
       <p>
         Rendimento de
         <span style={styles.incomeValue}>
@@ -26,7 +31,7 @@ export const InvestmentComparatorResults: React.FC<
             income.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
-            })}
+            })}{" "}
         </span>
       </p>
 
