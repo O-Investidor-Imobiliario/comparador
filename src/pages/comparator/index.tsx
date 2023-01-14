@@ -71,15 +71,11 @@ const calculatePercentMoreThenIpca = (investmentValue: number) => {
     .replace(".", ",")}%`;
 };
 
-const getDataset = (
-  label: string,
-  investmentValue: number,
-  dataSize: number
-) => {
+const getDataset = (label: string, investmentValue: number) => {
   return {
     realState: {
       label: "Litoral Catarinense",
-      data: calculateIncome(realState.slice(dataSize), investmentValue),
+      data: calculateIncome(realState, investmentValue),
       borderColor: Colors.PRIMARY,
       backgroundColor: Colors.PRIMARY,
       pointHoverBackgroundColor: Colors.PRIMARY,
@@ -91,7 +87,7 @@ const getDataset = (
 
     ipca: {
       label: "IPCA",
-      data: calculateIncome(ipca.slice(dataSize), investmentValue),
+      data: calculateIncome(ipca, investmentValue),
       borderColor: Colors.RED,
       backgroundColor: Colors.RED,
       pointBackgroundColor: Colors.RED,
@@ -103,7 +99,7 @@ const getDataset = (
     },
     poupança: {
       label: "Poupança",
-      data: calculateIncome(savingsAccount.slice(dataSize), investmentValue),
+      data: calculateIncome(savingsAccount, investmentValue),
       borderColor: Colors.BROWN,
       backgroundColor: Colors.BROWN,
       pointHoverBackgroundColor: Colors.BROWN,
@@ -114,7 +110,7 @@ const getDataset = (
     },
     ibovespa: {
       label: "IBOVESPA",
-      data: calculateIncome(ibovespa.slice(dataSize), investmentValue),
+      data: calculateIncome(ibovespa, investmentValue),
       borderColor: Colors.STRONG_GRAY,
       backgroundColor: Colors.STRONG_GRAY,
       pointHoverBackgroundColor: Colors.STRONG_GRAY,
@@ -125,7 +121,7 @@ const getDataset = (
     },
     cdi: {
       label: "CDI",
-      data: calculateIncome(cdi.slice(dataSize), investmentValue),
+      data: calculateIncome(cdi, investmentValue),
       borderColor: Colors.GRAY,
       backgroundColor: Colors.GRAY,
       pointHoverBackgroundColor: Colors.GRAY,
@@ -139,14 +135,13 @@ const getDataset = (
 
 const getInitialData = (
   initialValue: number,
-  datasets: string[],
-  labels: string[]
+  datasets: string[]
 ): { labels: string[]; datasets: any[] } => {
+  const labels = realState.map(({ date }) => date);
+
   return {
     labels,
-    datasets: datasets.map((dataset) =>
-      getDataset(dataset, initialValue, labels.length)
-    ),
+    datasets: datasets.map((dataset) => getDataset(dataset, initialValue)),
   };
 };
 
@@ -161,14 +156,10 @@ export const ComparatorPage = () => {
   const [investments, setInvestments] = useState<string[]>(() => ["ipca"]);
   const [period, setPeriod] = useState<string>("10");
   const [chartData, setChartData] = useState(
-    getInitialData(
-      getNumberFromCurrency(initialValue),
-      ["realState", "ipca"],
-      realState.map(({ date }) => date)
-    )
+    getInitialData(getNumberFromCurrency(initialValue), ["realState", "ipca"])
   );
 
-  console.log(realState.map(({ date }) => date));
+  // console.log(realState.map(({ date }) => date));
 
   const setDataSets = useCallback(() => {
     if (chartData) {
@@ -180,11 +171,7 @@ export const ComparatorPage = () => {
         }
       });
       setChartData(
-        getInitialData(
-          getNumberFromCurrency(initialValue),
-          datasets,
-          realState.map(({ date }) => date).slice(parseInt(period) * 12)
-        )
+        getInitialData(getNumberFromCurrency(initialValue), datasets)
       );
     }
   }, [initialValue]);
@@ -210,6 +197,7 @@ export const ComparatorPage = () => {
         ),
       }));
     } else {
+      console.log(parseInt(period) * 12);
       setChartData((old) => ({
         ...old,
         datasets: [
@@ -225,41 +213,6 @@ export const ComparatorPage = () => {
     newSelected: string
   ) => {
     setPeriod(newSelected);
-    // if (
-    //   chartData.datasets?.[0].data.length > parseInt(newSelected) ||
-    //   chartData.datasets?.[0].data.length < parseInt(newSelected)
-    // ) {
-    //   console.log(newSelected);
-
-    //   const existingDatasetsLabels = chartData.datasets.map(
-    //     ({ label }, idx) => {
-    //       if (idx === 0) {
-    //         return "realState";
-    //       }
-    //       return label.toLowerCase();
-    //     }
-    //   );
-
-    //   const existingDataSets = existingDatasetsLabels.map((dataset) => {
-    //     return getDataset(dataset, getNumberFromCurrency(initialValue));
-    //   });
-
-    //   const slicedExistingDatasets = existingDataSets.map((newDataset) => {
-    //     return {
-    //       ...newDataset,
-    //       data: newDataset?.data.slice(parseInt(newSelected) * 12),
-    //     };
-    //   });
-
-    //   console.log(slicedExistingDatasets);
-
-    //   const slicedLabels = chartData.labels.slice(parseInt(newSelected) * 12);
-
-    //   setChartData({
-    //     labels: slicedLabels,
-    //     datasets: slicedExistingDatasets,
-    //   });
-    // }
   };
 
   return (
