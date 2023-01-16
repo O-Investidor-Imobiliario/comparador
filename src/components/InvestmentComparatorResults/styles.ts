@@ -1,13 +1,13 @@
 import { Colors } from "../../styles/colors";
 
 export const styles = (width: number): any => {
-  return width >= 1024
+  return width >= 24
     ? {
         container: {},
         result: {
           color: Colors.PRIMARY,
           fontWeight: "bold",
-          fontSize: 48,
+          fontSize: 32,
           lineHeight: "48px",
           margin: 0,
         },

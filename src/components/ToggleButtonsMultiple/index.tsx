@@ -54,7 +54,7 @@ export default function ToggleButtonsMultiple({
         color="primary"
         style={{
           display: "flex",
-          width: 402,
+          width: 330,
           justifyContent: "space-between",
           height: 48,
         }}

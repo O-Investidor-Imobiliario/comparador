@@ -53,12 +53,12 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
       onChange={(event) => handleChange(event.target.value)}
       InputProps={{
         style:
-          width >= 1024
+          width >= 24
             ? { fontWeight: "bold", fontSize: 24 }
             : { fontWeight: "bold", fontSize: 48, padding: 8 },
       }}
       InputLabelProps={{
-        style: width >= 1024 ? { fontSize: 18 } : { fontSize: 48, top: -20 },
+        style: width >= 24 ? { fontSize: 18 } : { fontSize: 48, top: -20 },
       }}
       style={{ width: "100%" }}
     />

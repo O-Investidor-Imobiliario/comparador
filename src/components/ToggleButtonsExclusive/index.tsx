@@ -32,7 +32,7 @@ export default function ToggleButtonsExclusive({
     marginTop: 4,
     marginBottom: 4,
     color: `${Colors.PRIMARY}80`,
-    fontSize: 16,
+    fontSize: 12,
   };
 
   const buttonSelectedStyle = {

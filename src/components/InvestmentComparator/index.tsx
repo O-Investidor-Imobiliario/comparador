@@ -126,7 +126,7 @@ export const InvestmentComparator = () => {
       <div style={styles.headerContainer}>
         <div
           style={
-            width >= 1024
+            width >= 24
               ? styles.textFieldContainer
               : { ...styles.textFieldContainer, width: "100%" }
           }
@@ -139,7 +139,7 @@ export const InvestmentComparator = () => {
           />
         </div>
 
-        {width >= 1024 && <ResultComponent />}
+        {width >= 24 && <ResultComponent />}
       </div>
       <div style={styles.filtersContainer}>
         <ToggleButtonsMultiple
@@ -179,7 +179,7 @@ export const InvestmentComparator = () => {
 
       {chartData?.labels?.length > 0 && <MultipleLineChart data={chartData} />}
 
-      {width < 1024 && (
+      {width < 24 && (
         <div>
           <ResultComponent />
         </div>

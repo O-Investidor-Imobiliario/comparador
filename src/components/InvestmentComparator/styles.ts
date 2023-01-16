@@ -1,6 +1,6 @@
 export const styles = {
   container: {
-    width: 920,
+    width: 700,
   },
   headerContainer: {
     minHeight: 200,

@@ -5,7 +5,7 @@ export const theme = createTheme({
   typography: {
     allVariants: {
       fontFamily: "Poppins, sans-serif",
-      fontSize: 16,
+      fontSize: 12,
     },
   },
   components: {
