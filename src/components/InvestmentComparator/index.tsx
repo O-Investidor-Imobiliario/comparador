@@ -172,11 +172,11 @@ export const InvestmentComparator = () => {
         </Column>
       </Row>
       <Row>
-        <Column desktop={12} mobile={12} tablet={12}>
-          {chartData?.labels?.length > 0 && (
+        {chartData?.labels?.length > 0 && (
+          <Column desktop={12} mobile={12} tablet={12}>
             <MultipleLineChart data={chartData} />
-          )}
-        </Column>
+          </Column>
+        )}
       </Row>
     </div>
   );

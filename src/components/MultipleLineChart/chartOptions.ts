@@ -1,5 +1,5 @@
 export const options = {
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   responsive: true,
   stacked: false,
   interaction: {

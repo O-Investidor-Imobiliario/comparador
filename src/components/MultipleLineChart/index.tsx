@@ -10,7 +10,9 @@ import {
   ChartData,
   Point,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { options } from "./chartOptions";
 
 ChartJS.register(
@@ -30,5 +32,23 @@ export interface MultipleLineChartProps {
 export const MultipleLineChart: React.FC<MultipleLineChartProps> = ({
   data,
 }) => {
-  return <Line options={options} data={data} />;
+  const [width] = useWindowSize();
+  const [chartWidth, setChartWidth] = useState(0);
+
+  useEffect(() => {
+    console.log(width);
+    if (width >= 700) {
+      setChartWidth(690);
+    } else {
+      setChartWidth(width - 50);
+    }
+  }, [width]);
+
+  return (
+    <Line
+      options={options}
+      data={data}
+      style={{ width: chartWidth, height: 400 }}
+    />
+  );
 };
