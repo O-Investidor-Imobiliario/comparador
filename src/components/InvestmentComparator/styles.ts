@@ -1,15 +1,14 @@
+import styled from "styled-components";
+
 export const styles = {
   container: {
-    width: 700,
+    maxWidth: 700,
   },
   headerContainer: {
     minHeight: 200,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  textFieldContainer: {
-    width: "40%",
   },
   filtersContainer: {
     display: "flex",
@@ -18,3 +17,10 @@ export const styles = {
     marginBottom: 24,
   },
 };
+
+export const TextFieldContainer = styled.div`
+  width: 80%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;

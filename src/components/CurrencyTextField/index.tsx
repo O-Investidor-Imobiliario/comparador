@@ -1,5 +1,4 @@
 import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
 
 export interface CurrencyTextFieldProps {
   label: string;
@@ -14,16 +13,6 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
   value,
   setValue,
 }) => {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-  });
-
   const handleChange = (value: string) => {
     if (value === "R$ " || value.length === 0) {
       value = "0";
@@ -43,7 +32,6 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
       return setValue("R$ " + result);
     }
   };
-
   return (
     <TextField
       id={id}
@@ -52,13 +40,10 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
       value={value}
       onChange={(event) => handleChange(event.target.value)}
       InputProps={{
-        style:
-          width >= 24
-            ? { fontWeight: "bold", fontSize: 24 }
-            : { fontWeight: "bold", fontSize: 48, padding: 8 },
+        style: { fontWeight: "bold", fontSize: 24 },
       }}
       InputLabelProps={{
-        style: width >= 24 ? { fontSize: 18 } : { fontSize: 48, top: -20 },
+        style: { fontSize: 18 },
       }}
       style={{ width: "100%" }}
     />

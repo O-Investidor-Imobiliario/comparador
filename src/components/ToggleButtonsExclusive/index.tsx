@@ -5,6 +5,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import { Colors } from "../../styles/colors";
 import { Property } from "csstype";
+import { Label } from "./styles";
 
 export interface ButtonOptions {
   title: string;
@@ -15,12 +16,14 @@ export interface ToggleButtonsExclusiveProps {
   buttonsOptions: ButtonOptions[];
   selected: string;
   onChange: (event: React.MouseEvent<HTMLElement>, newSelected: string) => void;
+  label?: string;
 }
 
 export default function ToggleButtonsExclusive({
   buttonsOptions,
   selected,
   onChange,
+  label,
 }: ToggleButtonsExclusiveProps) {
   const buttonStyle = {
     borderRadius: 5,
@@ -42,32 +45,35 @@ export default function ToggleButtonsExclusive({
   };
 
   return (
-    <ToggleButtonGroup
-      value={selected}
-      exclusive
-      onChange={onChange}
-      aria-label="text alignment"
-      color="primary"
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        backgroundColor: Colors.ICE,
-        padding: "4px 8px",
-        gap: 8,
-        alignItems: "center",
-      }}
-    >
-      {buttonsOptions.map(({ value, title }, index) => (
-        <ToggleButton
-          key={`toggle-button-${index}`}
-          value={value}
-          aria-label={value}
-          size="small"
-          style={selected == value ? buttonSelectedStyle : buttonStyle}
-        >
-          {title}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+    <div style={{ textAlign: "right" }}>
+      <Label>{label}</Label>
+      <ToggleButtonGroup
+        value={selected}
+        exclusive
+        onChange={onChange}
+        aria-label="text alignment"
+        color="primary"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: Colors.ICE,
+          padding: "4px 8px",
+          gap: 8,
+          alignItems: "center",
+        }}
+      >
+        {buttonsOptions.map(({ value, title }, index) => (
+          <ToggleButton
+            key={`toggle-button-${index}`}
+            value={value}
+            aria-label={value}
+            size="small"
+            style={selected == value ? buttonSelectedStyle : buttonStyle}
+          >
+            {title}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </div>
   );
 }

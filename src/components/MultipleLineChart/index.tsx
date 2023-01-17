@@ -30,9 +30,5 @@ export interface MultipleLineChartProps {
 export const MultipleLineChart: React.FC<MultipleLineChartProps> = ({
   data,
 }) => {
-  return (
-    <div>
-      <Line options={options} data={data} style={{ height: 400 }} />
-    </div>
-  );
+  return <Line options={options} data={data} />;
 };

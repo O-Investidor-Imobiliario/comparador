@@ -15,7 +15,8 @@ import {
 } from "../../utils/calculate-incomes";
 import { getNumberFromCurrency } from "../../utils/get-number-from-currency";
 import { getDataset, getInitialData } from "./getDatasets";
-import { styles } from "./styles";
+import { styles, TextFieldContainer } from "./styles";
+import { Column, Row } from "../Grid";
 
 export const InvestmentComparator = () => {
   const realStateService = new RealStateService();
@@ -23,7 +24,6 @@ export const InvestmentComparator = () => {
   const savingsAccountService = new SavingsAccountService();
   const savingsAccount = savingsAccountService.getValues();
 
-  const [width, setWidth] = useState(window.innerWidth);
   const [initialValue, setInitialValue] = useState("R$ 50.000,00");
   const [investments, setInvestments] = useState<string[]>(() => ["poupança"]);
   const [period, setPeriod] = useState<string>("10");
@@ -34,14 +34,6 @@ export const InvestmentComparator = () => {
       parseInt(period)
     )
   );
-
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-  });
 
   useEffect(
     useCallback(() => {
@@ -120,70 +112,72 @@ export const InvestmentComparator = () => {
       }));
     }
   };
-
   return (
     <div style={styles.container}>
-      <div style={styles.headerContainer}>
-        <div
-          style={
-            width >= 24
-              ? styles.textFieldContainer
-              : { ...styles.textFieldContainer, width: "100%" }
-          }
-        >
-          <CurrencyTextField
-            value={initialValue}
-            setValue={setInitialValue}
-            id="investment-value"
-            label="Quanto você quer investir?"
-          />
-        </div>
+      <Row>
+        <Column mobile={12} desktop={7} tablet={6}>
+          <TextFieldContainer>
+            <CurrencyTextField
+              value={initialValue}
+              setValue={setInitialValue}
+              id="investment-value"
+              label="Quanto você quer investir?"
+            />
+          </TextFieldContainer>
+        </Column>
 
-        {width >= 24 && <ResultComponent />}
-      </div>
-      <div style={styles.filtersContainer}>
-        <ToggleButtonsMultiple
-          label={"Selecione os ativos para comparar"}
-          buttonsOptions={[
-            {
-              title: "Poupança",
-              value: "poupança",
-              backgroundColor: Colors.RED,
-            },
-            { title: "IPCA", value: "ipca", backgroundColor: Colors.BROWN },
-            {
-              title: "IBOVESPA",
-              value: "ibovespa",
-              backgroundColor: Colors.STRONG_GRAY,
-            },
-            { title: "CDI", value: "cdi", backgroundColor: Colors.GRAY },
-          ]}
-          onChange={handleInvestmentsChange}
-          values={investments}
-        />
-        <ToggleButtonsExclusive
-          buttonsOptions={[
-            { title: "1 ano", value: "1" },
-            { title: "2 anos", value: "2" },
-            { title: "5 anos", value: "5" },
-            { title: "10 anos", value: "10" },
-          ]}
-          selected={period}
-          onChange={(_, newSelected) => {
-            if (newSelected) {
-              setPeriod(newSelected);
-            }
-          }}
-        />
-      </div>
-
-      {chartData?.labels?.length > 0 && <MultipleLineChart data={chartData} />}
-
-      {width < 24 && (
-        <div>
+        <Column mobile={12} desktop={5} tablet={6}>
           <ResultComponent />
-        </div>
-      )}
+        </Column>
+      </Row>
+
+      <Row>
+        <Column desktop={6} mobile={12} tablet={6}>
+          <ToggleButtonsMultiple
+            label={"Selecione os ativos para comparar"}
+            buttonsOptions={[
+              {
+                title: "Poupança",
+                value: "poupança",
+                backgroundColor: Colors.RED,
+              },
+              { title: "IPCA", value: "ipca", backgroundColor: Colors.BROWN },
+              {
+                title: "IBOVESPA",
+                value: "ibovespa",
+                backgroundColor: Colors.STRONG_GRAY,
+              },
+              { title: "CDI", value: "cdi", backgroundColor: Colors.GRAY },
+            ]}
+            onChange={handleInvestmentsChange}
+            values={investments}
+          />
+        </Column>
+        <Column desktop={6} mobile={12} tablet={6}>
+          <ToggleButtonsExclusive
+            label="Selecione o período"
+            buttonsOptions={[
+              { title: "1 ano", value: "1" },
+              { title: "2 anos", value: "2" },
+              { title: "5 anos", value: "5" },
+              { title: "10 anos", value: "10" },
+            ]}
+            selected={period}
+            onChange={(_, newSelected) => {
+              if (newSelected) {
+                setPeriod(newSelected);
+              }
+            }}
+          />
+        </Column>
+      </Row>
+      <Row>
+        <Column desktop={12} mobile={12} tablet={12}>
+          {chartData?.labels?.length > 0 && (
+            <MultipleLineChart data={chartData} />
+          )}
+        </Column>
+      </Row>
     </div>
   );
 };
