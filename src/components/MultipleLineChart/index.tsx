@@ -36,7 +36,6 @@ export const MultipleLineChart: React.FC<MultipleLineChartProps> = ({
   const [chartWidth, setChartWidth] = useState(0);
 
   useEffect(() => {
-    console.log(width);
     if (width >= 700) {
       setChartWidth(690);
     } else {
