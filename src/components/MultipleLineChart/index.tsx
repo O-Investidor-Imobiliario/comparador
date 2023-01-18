@@ -44,10 +44,14 @@ export const MultipleLineChart: React.FC<MultipleLineChartProps> = ({
   }, [width]);
 
   return (
-    <Line
-      options={options}
-      data={data}
-      style={{ width: chartWidth, height: 400 }}
-    />
+    <>
+      {chartWidth && (
+        <Line
+          options={options}
+          data={data}
+          style={{ width: chartWidth, height: 400 }}
+        />
+      )}
+    </>
   );
 };
