@@ -1,410 +1,1207 @@
 export class RealStateService {
-  getRealStateAppreciationHistory(): { date: string; value: number }[] {
-    const fipeZapBcData = [
+  getRealState(): { date: string; value: number }[] {
+    const mensal = [
       {
-        Ano: 2022,
-        Mes: 9,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 157.8407,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 23.832565,
+        date: "01/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 8,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 153.6178,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 23.044502,
+        date: "02/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 7,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 150.1974,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 22.878239,
+        date: "03/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 6,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 148.3202,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 23.76739,
+        date: "04/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 5,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 147.2676,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 24.774896,
+        date: "05/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 4,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 146.8296,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 25.336787,
+        date: "06/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 3,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 145.3124,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 24.926688,
+        date: "07/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 2,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 143.1626,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 23.715107999999997,
+        date: "08/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2022,
-        Mes: 1,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 140.9889,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 22.800822,
+        date: "09/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 12,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 138.1835,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 21.210856,
+        date: "10/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 11,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 134.2361,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 18.756343,
+        date: "11/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 10,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 130.4367,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 16.204673,
+        date: "12/2000",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 9,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 127.463,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 15.096952,
+        date: "01/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 8,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 124.8473,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 13.850063000000002,
+        date: "02/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 7,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 122.2327,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 12.218616,
+        date: "03/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 6,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 119.8379,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 10.297854,
+        date: "04/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 5,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 118.0266,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 8.911497,
+        date: "05/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 4,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 117.1481,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 8.437611,
+        date: "06/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 3,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 116.3181,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 8.06061,
+        date: "07/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 2,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 115.7196,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 7.607905,
+        date: "08/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2021,
-        Mes: 1,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 114.811,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 7.053751,
+        date: "09/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 12,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 114.0026,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 5.712585,
+        date: "10/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 11,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 113.0349,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.770318,
+        date: "11/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 10,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 112.2474,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.021135,
+        date: "12/2001",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 9,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 110.744,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 3.482465,
+        date: "01/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 8,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 109.6594,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 2.97644,
+        date: "02/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 7,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 108.9237,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 2.39711,
+        date: "03/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 6,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 108.6493,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 2.236014,
+        date: "04/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 5,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 108.3693,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 1.9922849999999999,
+        date: "05/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 4,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 108.0327,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 1.838825,
+        date: "06/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 3,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.6416,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 1.8186069999999999,
+        date: "07/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 2,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.5381632492,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 2.0483610572031,
+        date: "08/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2020,
-        Mes: 1,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.246138524491,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 2.3706299136152302,
+        date: "09/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 12,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.842028032099,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 3.15830341306274,
+        date: "10/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 11,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.888245545566,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 3.82269450155599,
+        date: "11/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 10,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.908257740719,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.46329642262278,
+        date: "12/2002",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 9,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 107.017196547231,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.74183932177517,
+        date: "01/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 8,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 106.489825704005,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.77463893252228,
+        date: "02/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 7,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 106.373834104797,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.95867891444688,
+        date: "03/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 6,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 106.273060287658,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.81924035598902,
+        date: "04/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 5,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 106.252438823959,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.71659735676819,
+        date: "05/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 4,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 106.082038834624,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.70088533589847,
+        date: "06/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 3,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 105.718938016929,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.38185832607649,
+        date: "07/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 2,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 105.379608388732,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.72942043765305,
+        date: "08/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2019,
-        Mes: 1,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 104.762604875041,
-        "Balneário Camboriú_VariacaoUltimos12Meses": 4.76260487504054,
+        date: "09/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 12,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 104.540327306743,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "10/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 11,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 103.915859690917,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "11/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 10,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 103.297771979317,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "12/2003",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 9,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 102.172347974973,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "01/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 8,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.637024750415,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "02/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 7,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.348297449041,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "03/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 6,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.386978122272,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "04/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 5,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.466664794272,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "05/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 4,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.319142139337,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "06/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 3,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 101.280950265013,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "07/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 2,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 100.620826457706,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "08/2004",
+        value: 10 / 12,
       },
       {
-        Ano: 2018,
-        Mes: 1,
-        CodigoDormitorio: 1,
-        "Balneário Camboriú": 100,
-        "Balneário Camboriú_VariacaoUltimos12Meses": null,
+        date: "09/2004",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2004",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2004",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2004",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2005",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2006",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2007",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2008",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2009",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "02/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "03/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "04/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "05/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "06/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "07/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "08/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "09/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "10/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "11/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "12/2010",
+        value: 10 / 12,
+      },
+      {
+        date: "01/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2011",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2012",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2013",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2014",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2015",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2016",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2017",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2018",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2019",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2020",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2021",
+        value: 25 / 12,
+      },
+      {
+        date: "01/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "02/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "03/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "04/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "05/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "06/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "07/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "08/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "09/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "10/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "11/2022",
+        value: 25 / 12,
+      },
+      {
+        date: "12/2022",
+        value: 25 / 12,
       },
     ];
 
-    return fipeZapBcData.map((data) => ({
-      date: `${data.Ano}-${data.Mes < 10 ? "0" + data.Mes : data.Mes}-31`,
-      value: data["Balneário Camboriú"] / 100,
-    }));
+    const anual = [
+      {
+        date: "2022",
+        value: 25,
+      },
+      {
+        date: "2021",
+        value: 25,
+      },
+      {
+        date: "2020",
+        value: 25,
+      },
+      {
+        date: "2019",
+        value: 25,
+      },
+      {
+        date: "2018",
+        value: 25,
+      },
+      {
+        date: "2017",
+        value: 25,
+      },
+      {
+        date: "2016",
+        value: 25,
+      },
+      {
+        date: "2015",
+        value: 25,
+      },
+      {
+        date: "2014",
+        value: 25,
+      },
+      {
+        date: "2013",
+        value: 25,
+      },
+      {
+        date: "2012",
+        value: 25,
+      },
+      {
+        date: "2011",
+        value: 25,
+      },
+      {
+        date: "2010",
+        value: 10,
+      },
+      {
+        date: "2009",
+        value: 10,
+      },
+      {
+        date: "2008",
+        value: 10,
+      },
+      {
+        date: "2007",
+        value: 10,
+      },
+      {
+        date: "2006",
+        value: 10,
+      },
+      {
+        date: "2005",
+        value: 10,
+      },
+      {
+        date: "2004",
+        value: 10,
+      },
+      {
+        date: "2003",
+        value: 10,
+      },
+      {
+        date: "2002",
+        value: 10,
+      },
+      {
+        date: "2001",
+        value: 10,
+      },
+      {
+        date: "2000",
+        value: 10,
+      },
+    ].reverse();
+
+    return mensal;
   }
 }

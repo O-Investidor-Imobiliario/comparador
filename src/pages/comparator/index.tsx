@@ -1,7 +1,5 @@
+import { InvestmentComparator } from "../../components/InvestmentComparator";
+
 export const ComparatorPage = () => {
-  return (
-    <>
-      <p>Teste</p>
-    </>
-  );
+  return <InvestmentComparator />;
 };
