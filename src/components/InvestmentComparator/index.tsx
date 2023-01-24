@@ -24,13 +24,16 @@ export const InvestmentComparator = () => {
   const savingsAccountService = new SavingsAccountService();
   const savingsAccount = savingsAccountService.getValues();
 
-  const [initialValue, setInitialValue] = useState("R$ 50.000,00");
-  const [investments, setInvestments] = useState<string[]>(() => ["poupança"]);
-  const [period, setPeriod] = useState<string>("10");
+  const [initialValue, setInitialValue] = useState("R$ 500.000,00");
+  const [investments, setInvestments] = useState<string[]>(() => [
+    "poupança",
+    "ipca",
+  ]);
+  const [period, setPeriod] = useState<string>("2");
   const [chartData, setChartData] = useState(
     getInitialData(
       getNumberFromCurrency(initialValue),
-      ["realState", "poupança"],
+      ["realState", "poupança", "ipca"],
       parseInt(period)
     )
   );
