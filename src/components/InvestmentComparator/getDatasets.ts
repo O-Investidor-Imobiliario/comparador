@@ -91,7 +91,7 @@ export const getInitialData = (
   const labels = realState
     .filter((item) => {
       const itemYear = parseInt(item.date.split("/")[1]);
-      return itemYear >= 2022 - period + 1;
+      return itemYear >= 2023 - period;
     })
     .map(({ date }) => date);
 

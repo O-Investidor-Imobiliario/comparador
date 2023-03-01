@@ -1200,6 +1200,18 @@ export class IbovespaService {
         date: "12/2022",
         value: -2.45,
       },
+      {
+        date: "12/2022",
+        value: -2.45,
+      },
+      {
+        date: "01/2023",
+        value: 3.37,
+      },
+      // {
+      //   date: "02/2023",
+      //   value: 7.49,
+      // },
     ];
 
     return mensal;
