@@ -1109,10 +1109,10 @@ export class RealStateService {
         date: "01/2023",
         value: 25 / 12,
       },
-      // {
-      //   date: "02/2023",
-      //   value: 25 / 12,
-      // },
+      {
+        date: "02/2023",
+        value: 25 / 12,
+      },
     ];
 
     const anual = [

@@ -1109,10 +1109,10 @@ export class CdiService {
         date: "01/2023",
         value: 1.12,
       },
-      // {
-      //   date: "02/2023",
-      //   value: 0.92,
-      // },
+      {
+        date: "02/2023",
+        value: 0.92,
+      },
     ];
 
     const anual = [

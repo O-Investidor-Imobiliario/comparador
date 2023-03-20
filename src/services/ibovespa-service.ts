@@ -1208,10 +1208,10 @@ export class IbovespaService {
         date: "01/2023",
         value: 3.37,
       },
-      // {
-      //   date: "02/2023",
-      //   value: 7.49,
-      // },
+      {
+        date: "02/2023",
+        value: 7.49,
+      },
     ];
 
     return mensal;
