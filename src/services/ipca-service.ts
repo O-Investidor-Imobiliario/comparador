@@ -1113,6 +1113,10 @@ export class IpcaService {
         date: "01/2023",
         value: 0.84,
       },
+      {
+        date: "03/2023",
+        value: 0.71,
+      },
     ];
 
     return mensal;

@@ -1210,7 +1210,11 @@ export class IbovespaService {
       },
       {
         date: "02/2023",
-        value: 7.49,
+        value: -7.49,
+      },
+      {
+        date: "03/2023",
+        value: -2.91, 
       },
     ];
 
