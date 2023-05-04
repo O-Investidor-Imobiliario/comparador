@@ -43,7 +43,7 @@ const CurrencyTextField: React.FC<CurrencyTextFieldProps> = ({
         style: { fontWeight: "bold", fontSize: 24 },
       }}
       InputLabelProps={{
-        style: { fontSize: 18 },
+        style: { fontSize: 16 },
       }}
       style={{ width: "100%" }}
     />

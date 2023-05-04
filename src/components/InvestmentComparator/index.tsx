@@ -117,69 +117,83 @@ export const InvestmentComparator = () => {
   };
   return (
     <div style={styles.container}>
-      <Row>
-        <Column mobile={12} desktop={7} tablet={6}>
-          <TextFieldContainer>
-            <CurrencyTextField
-              value={initialValue}
-              setValue={setInitialValue}
-              id="investment-value"
-              label="Quanto você quer investir?"
-            />
-          </TextFieldContainer>
+      <Row
+        style={{
+          alignItems: "start",
+        }}
+      >
+        <Column desktop={4} tablet={12} style={{ marginTop: 5 }}>
+          <Row>
+            <Column tablet={12} desktop={12} mobile={12}>
+              <TextFieldContainer>
+                <CurrencyTextField
+                  value={initialValue}
+                  setValue={setInitialValue}
+                  id="investment-value"
+                  label="Quanto você quer investir?"
+                />
+              </TextFieldContainer>
+            </Column>
+          </Row>
+          <Row>
+            <Column tablet={12} desktop={12} mobile={12}>
+              <ResultComponent />
+            </Column>
+          </Row>
         </Column>
-
-        <Column mobile={12} desktop={5} tablet={6}>
-          <ResultComponent />
+        <Column desktop={8}>
+          <Row>
+            <Column desktop={6} tablet={12} mobile={12}>
+              <ToggleButtonsMultiple
+                label={"Selecione os ativos para comparar"}
+                buttonsOptions={[
+                  {
+                    title: "Poupança",
+                    value: "poupança",
+                    backgroundColor: Colors.RED,
+                  },
+                  {
+                    title: "IPCA",
+                    value: "ipca",
+                    backgroundColor: Colors.BROWN,
+                  },
+                  {
+                    title: "IBOVESPA",
+                    value: "ibovespa",
+                    backgroundColor: Colors.STRONG_GRAY,
+                  },
+                  { title: "CDI", value: "cdi", backgroundColor: Colors.GRAY },
+                ]}
+                onChange={handleInvestmentsChange}
+                values={investments}
+              />
+            </Column>
+            <Column desktop={6} tablet={12} mobile={12}>
+              <ToggleButtonsExclusive
+                label="Selecione o período"
+                buttonsOptions={[
+                  { title: "1 ano", value: "1" },
+                  { title: "2 anos", value: "2" },
+                  { title: "5 anos", value: "5" },
+                  { title: "10 anos", value: "10" },
+                ]}
+                selected={period}
+                onChange={(_, newSelected) => {
+                  if (newSelected) {
+                    setPeriod(newSelected);
+                  }
+                }}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column desktop={12} mobile={12} tablet={12}>
+              {chartData?.labels?.length > 0 && (
+                <MultipleLineChart data={chartData} />
+              )}
+            </Column>
+          </Row>
         </Column>
-      </Row>
-
-      <Row>
-        <Column desktop={6} mobile={12} tablet={6}>
-          <ToggleButtonsMultiple
-            label={"Selecione os ativos para comparar"}
-            buttonsOptions={[
-              {
-                title: "Poupança",
-                value: "poupança",
-                backgroundColor: Colors.RED,
-              },
-              { title: "IPCA", value: "ipca", backgroundColor: Colors.BROWN },
-              {
-                title: "IBOVESPA",
-                value: "ibovespa",
-                backgroundColor: Colors.STRONG_GRAY,
-              },
-              { title: "CDI", value: "cdi", backgroundColor: Colors.GRAY },
-            ]}
-            onChange={handleInvestmentsChange}
-            values={investments}
-          />
-        </Column>
-        <Column desktop={6} mobile={12} tablet={6}>
-          <ToggleButtonsExclusive
-            label="Selecione o período"
-            buttonsOptions={[
-              { title: "1 ano", value: "1" },
-              { title: "2 anos", value: "2" },
-              { title: "5 anos", value: "5" },
-              { title: "10 anos", value: "10" },
-            ]}
-            selected={period}
-            onChange={(_, newSelected) => {
-              if (newSelected) {
-                setPeriod(newSelected);
-              }
-            }}
-          />
-        </Column>
-      </Row>
-      <Row>
-        {chartData?.labels?.length > 0 && (
-          <Column desktop={12} mobile={12} tablet={12}>
-            <MultipleLineChart data={chartData} />
-          </Column>
-        )}
       </Row>
     </div>
   );

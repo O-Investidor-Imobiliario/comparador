@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const styles = {
   container: {
-    maxWidth: 700,
+    maxWidth: 1140,
   },
   headerContainer: {
     minHeight: 200,
