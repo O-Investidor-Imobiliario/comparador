@@ -46,7 +46,7 @@ export default function ToggleButtonsMultiple({
 
   return (
     <div>
-      <p style={{ marginTop: 0, backgroundColor: "red" }}>{label}</p>
+      <p style={{ marginTop: 0 }}>{label}</p>
       <ToggleButtonGroup
         value={values}
         onChange={onChange}
