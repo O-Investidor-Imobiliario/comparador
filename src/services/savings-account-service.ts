@@ -1114,9 +1114,29 @@ export class SavingsAccountService {
         value: 0.5834,
       },
       {
-        date: "02/2023",
+        date: "03/2023",
         value: 0.7404,
       },
+      {
+        date: "04/2023",
+        value: 0.5825,
+      },
+      {
+        date: "05/2023",
+        value: 0.7158,
+      },
+      {
+        date: "06/2023",
+        value: 0.6808,
+      },
+      {
+        date: "07/2023",
+        value: 0.6589,
+      },
+      // {
+      //   date: "08/2023",
+      //   value: 0.7171,
+      // },
     ];
 
     const anual = [
