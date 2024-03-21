@@ -1133,10 +1133,34 @@ export class IpcaService {
         date: "07/2023",
         value: 0.12,
       },
-      // {
-      //   date: "08/2023",
-      //   value:
-      // },
+      {
+        date: "08/2023",
+        value: 0.23,
+      },
+      {
+        date: "09/2023",
+        value: 0.26,
+      },
+      {
+        date: "10/2023",
+        value: 0.24,
+      },
+      {
+        date: "11/2023",
+        value: 0.28,
+      },
+      {
+        date: "12/2023",
+        value: 0.56,
+      },
+      {
+        date: "01/2024",
+        value: 0.42,
+      },
+      {
+        date: "02/2024",
+        value: 0.83,
+      },
     ];
 
     return mensal;
